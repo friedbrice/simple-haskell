@@ -1,4 +1,4 @@
-# SipmleHaskell
+# SimpleHaskell
 
 A low-feature Haskell package for Sublime Text
 
