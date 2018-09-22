@@ -19,13 +19,13 @@ Until then, clone the repository, and from the project root, run one of the foll
 For MacOS:
 
 ```
-cp . ~/Library/Application\ Support/SublimeText3/Packages/User/
+cp ./* ~/Library/Application\ Support/SublimeText3/Packages/User/
 ```
 
 For Linux:
 
 ```
-cp . ~/.config/sublime-text-3/Packages/User/
+cp ./* ~/.config/sublime-text-3/Packages/User/
 ```
 
 It should also work in Windows, but I don't know the location of the User package or how to copy files.
