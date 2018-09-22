@@ -30,13 +30,11 @@ It should also work in Windows, but I don't know the location of the User packag
 
 Open a Haskell source file (for example, the provided _syntax-test.hs_) and try it out.
 
-## Credits
+## Copyright and Contributing
 
 Syntax highlighting is based on the default _Haskell.sublime-syntax_ file included with Sublime Text.
 
 Multi-line string support by [SQbQxeKd3JHD8](https://github.com/SublimeHaskell/SublimeHaskell/pull/422).
-
-## Copyright and Contributing
 
 Copyright (c) 2018 Daniel Brice, except as otherwise noted.
 
