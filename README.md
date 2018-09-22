@@ -12,7 +12,9 @@ Future directions might involve adding a simple build system based on [ghcid](ht
 
 ## Getting Started
 
-Clone the repository, and from the project root, run one of the following commands.
+Once my Package Control PR goes through, you can install this as you would install any other Sublime Text 3 package.
+
+Until then, clone the repository, and from the project root, run one of the following commands.
 
 For MacOS:
 
