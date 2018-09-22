@@ -24,4 +24,4 @@ Permission granted to anyone who posesses the software to use, distribute, and m
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
-Pull requests welcomed! While I don't have time to work on feature requests, I will happily consider any pull requests and either merge them or give feedback.
+**Pull requests welcomed!** While I don't have time to work on feature requests, I will happily consider any pull requests and either merge them or give feedback.
