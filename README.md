@@ -10,6 +10,26 @@ Right now, this package focuses on fixing issues with syntax highlighting and pr
 
 Future directions might involve adding a simple build system based on [ghcid](https://github.com/ndmitchell/ghcid) and slightly-more intelligent code completion.
 
+## Getting Started
+
+Clone the repository, and from the project root, run one of the following commands.
+
+For MacOS:
+
+```
+cp . ~/Library/Application\ Support/SublimeText3/Packages/User/
+```
+
+For Linux:
+
+```
+cp . ~/.config/sublime-text-3/Packages/User/
+```
+
+It should also work in Windows, but I don't know the location of the User package or how to copy files.
+
+Open a Haskell source file (for example, the provided _syntax-test.hs_) and try it out.
+
 ## Credits
 
 Syntax highlighting is based on the default _Haskell.sublime-syntax_ file included with Sublime Text.
