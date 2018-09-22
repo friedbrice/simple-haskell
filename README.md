@@ -8,13 +8,13 @@ This package aims to support Haskell development on Sublime Text without relying
 
 Right now, this package focuses on fixing issues with syntax highlighting and providing some rudimentary completions.
 
-Future directions might involve adding a simple build system based on [ghcid][https://github.com/ndmitchell/ghcid] and slightly-more intelligent code completion.
+Future directions might involve adding a simple build system based on [ghcid](https://github.com/ndmitchell/ghcid) and slightly-more intelligent code completion.
 
 ## Credits
 
 Syntax highlighting is based on the default _Haskell.sublime-syntax_ file included with Sublime Text.
 
-Multi-line string support by [SQbQxeKd3JHD8][https://github.com/SublimeHaskell/SublimeHaskell/pull/422].
+Multi-line string support by [SQbQxeKd3JHD8](https://github.com/SublimeHaskell/SublimeHaskell/pull/422).
 
 ## Copyright and Contributing
 
