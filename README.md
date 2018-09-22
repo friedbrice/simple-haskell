@@ -38,7 +38,7 @@ Multi-line string support by [SQbQxeKd3JHD8](https://github.com/SublimeHaskell/S
 
 ## Copyright and Contributing
 
-Copyright (c) 2018 Daniel Brice.
+Copyright (c) 2018 Daniel Brice, except as otherwise noted.
 
 Permission granted to anyone who posesses the software to use, distribute, and modify.
 
