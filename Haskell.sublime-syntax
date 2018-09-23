@@ -19,16 +19,9 @@ contexts:
   main:
     - match: '\bundefined\b'
       scope: invalid.haskell
-    - match: "(`)[a-zA-Z_']*?(`)"
+    - match: "`[a-zA-Z_']*?`"
       comment: "In case this regex seems unusual for an infix operator, note that Haskell allows any ordinary function application (elem 4 [1..10]) to be rewritten as an infix expression (4 `elem` [1..10])."
       scope: keyword.operator.function.infix.haskell
-      captures:
-        1: punctuation.definition.entity.haskell
-        2: punctuation.definition.entity.haskell
-    - match: \(\)
-      scope: constant.language.unit.haskell
-    - match: '\[\]'
-      scope: constant.language.empty-list.haskell
     - match: \b(module)\b
       captures:
         1: keyword.other.haskell
@@ -88,15 +81,6 @@ contexts:
         - include: module_name
         - include: module_exports
         - include: comments
-    - match: (deriving)\s*
-      captures:
-        1: keyword.other.haskell
-      push:
-        - meta_scope: meta.deriving.haskell
-        - match: '[^a-zA-Z_'']'
-          pop: true
-        - match: '[A-Z][a-zA-Z_'']*'
-          scope: entity.other.inherited-class.haskell
     - match: (deriving)\s*\(
       captures:
         1: keyword.other.haskell
@@ -105,6 +89,15 @@ contexts:
         - match: \)
           pop: true
         - match: '\b[A-Z][a-zA-Z_'']*'
+          scope: entity.other.inherited-class.haskell
+    - match: (deriving)\s*
+      captures:
+        1: keyword.other.haskell
+      push:
+        - meta_scope: meta.deriving.haskell
+        - match: '[^a-zA-Z_'']'
+          pop: true
+        - match: '[A-Z][a-zA-Z_'']*'
           scope: entity.other.inherited-class.haskell
     - match: \b(deriving|where|data|type|case|of|let|in|newtype|default)\b
       scope: keyword.other.haskell
@@ -202,7 +195,7 @@ contexts:
       captures:
         1: entity.name.function.haskell
         2: keyword.operator.haskell
-    - match: '\(([&|!%$+\-.,=</>]+)\)\s*(::|∷)'
+    - match: '\(([!#$%&*+./<=>?@\^|\-~:]+)\)\s*(::|∷)'
       comment: Function declarations with operator identifier
       captures:
         1: entity.name.function.haskell
@@ -211,7 +204,7 @@ contexts:
       scope: constant.other.haskell
     - include: comments
     - include: infix_op
-    - match: '[&|!%$?~+:\-.=</>\\]+'
+    - match: '[!#$%&*+./<=>?@\^|\-~:]+'
       comment: In case this regex seems overly general, note that Haskell permits the definition of new operators which can be nearly any string of punctuation characters, such as $%^&*.
       scope: keyword.operator.haskell
     - match: ","
@@ -239,7 +232,7 @@ contexts:
           pop: true
     - include: block_comment
   infix_op:
-    - match: '(\([&|!%$+:\-.=</>]+\)|\(,+\))'
+    - match: '(\([!#$%&*+./<=>?@\^|\-~:]+\)|\(,+\))'
       scope: entity.name.function.infix.haskell
   module_exports:
     - match: \(

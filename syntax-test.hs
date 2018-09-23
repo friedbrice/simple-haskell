@@ -105,3 +105,18 @@ data OneLine a = OneLine { unOneLine :: a }
 
 -- ST3: doesn't consider class methods to be definitions when on same line
 class OneLiner a where oneLiner :: a -> OneLine a
+
+----
+-- Check For Regressions
+----
+
+-- deriving more than one type class
+data DeriveMoreThanOne = DeriveMoreThanOne deriving (Eq, Read, Show)
+
+-- arrows
+toUnit :: DeriveMoreThanOne -> ()
+toUnit DeriveMoreThanOne = ()
+
+-- question marks in identifiers
+(!!?) :: DeriveMoreThanOne -> DeriveMoreThanOne -> DeriveMoreThanOne
+_ !!? _ = DeriveMoreThanOne
