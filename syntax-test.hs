@@ -111,12 +111,20 @@ class OneLiner a where oneLiner :: a -> OneLine a
 ----
 
 -- deriving more than one type class
-data DeriveMoreThanOne = DeriveMoreThanOne deriving (Eq, Read, Show)
+data DeriveMoreThanOne = MkDeriveMoreThanOne deriving (Eq, Read, Show)
 
 -- arrows
 toUnit :: DeriveMoreThanOne -> ()
-toUnit DeriveMoreThanOne = ()
+toUnit _ = ()
 
--- question marks in identifiers
+-- question marks in operators
 (!!?) :: DeriveMoreThanOne -> DeriveMoreThanOne -> DeriveMoreThanOne
-_ !!? _ = DeriveMoreThanOne
+_ !!? _ = MkDeriveMoreThanOne
+
+-- operators that start with '--'
+(-->) :: (a -> b) -> (b -> c) -> a -> c
+f --> g = g . f
+
+-- operators that end with '--'
+(<--) :: (b -> c) -> (a -> b) -> a -> c
+f <-- g = f . g

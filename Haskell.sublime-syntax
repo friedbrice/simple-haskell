@@ -195,7 +195,7 @@ contexts:
       captures:
         1: entity.name.function.haskell
         2: keyword.operator.haskell
-    - match: '\(([!#$%&*+./<=>?@\^|\-~:]+)\)\s*(::|∷)'
+    - match: '\(([!#$%&*+./<=>?@\\\^|\-~:]+)\)\s*(::|∷)'
       comment: Function declarations with operator identifier
       captures:
         1: entity.name.function.haskell
@@ -204,7 +204,7 @@ contexts:
       scope: constant.other.haskell
     - include: comments
     - include: infix_op
-    - match: '[!#$%&*+./<=>?@\^|\-~:]+'
+    - match: '[!#$%&*+./<=>?@\\\^|\-~:]+'
       comment: In case this regex seems overly general, note that Haskell permits the definition of new operators which can be nearly any string of punctuation characters, such as $%^&*.
       scope: keyword.operator.haskell
     - match: ","
@@ -224,7 +224,7 @@ contexts:
           scope: punctuation.definition.comment.end.haskell
           pop: true
   comments:
-    - match: '--'
+    - match: '--(?![!#$%&*+./<=>?@\\\^|~:])'
       scope: punctuation.definition.comment.haskell
       push:
         - meta_scope: comment.line.double-dash.haskell
@@ -232,7 +232,8 @@ contexts:
           pop: true
     - include: block_comment
   infix_op:
-    - match: '(\([!#$%&*+./<=>?@\^|\-~:]+\)|\(,+\))'
+    - match: '(\([!#$%&*+./<=>?@\\\^|\-~:]+\)|\(,+\))'
+      comment: Infix operator in prefix position
       scope: entity.name.function.infix.haskell
   module_exports:
     - match: \(
