@@ -16,10 +16,10 @@ Once my Package Control PR goes through, you can install this as you would insta
 
 Until then, clone the repository, and from the project root, run one of the following commands.
 
-For MacOS:
+For macOS:
 
 ```
-cp ./* ~/Library/Application\ Support/SublimeText3/Packages/User/
+cp ./* ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/
 ```
 
 For Linux:
