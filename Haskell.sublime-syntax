@@ -14,11 +14,9 @@ variables:
   decimal: '[{{digit}}][{{digit}}_]*'
   hexadecimal: '[{{hexit}}][{{hexit}}_]*'
   octal: '[{{octit}}][{{octit}}_]*'
-  type_head: '[A-Z]'
-  val_head: '[a-z_]'
   id_tail: '[a-zA-Z0-9_'']*'
-  type_id: '{{type_head}}{{id_tail}}'
-  val_id: '{{val_head}}{{id_tail}}'
+  type_id: '[A-Z]{{id_tail}}'
+  val_id: '[a-z_]{{id_tail}}'
   op_id: '[!#$%&*+./<=>?@\\\^|\-~:]+'
 
 contexts:
@@ -98,7 +96,7 @@ contexts:
       scope: keyword.control.haskell
     - match: '\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b'
       comment: Floats are always decimal
-      scope: constant.numeric.float.haskell
+      scope: constant.numeric.haskell
     - match: '\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b'
       scope: constant.numeric.haskell
     - match: '^\s*(#)\s*\w+'
@@ -181,20 +179,27 @@ contexts:
         4: constant.character.escape.hexadecimal.haskell
         5: constant.character.escape.control.haskell
         6: punctuation.definition.string.end.haskell
+    - match: '^({{val_id}})\s*$'
+      captures:
+        1: entity.name.function.haskell
+      comment: Dirty hack to capture function declarations where the type sig starts on the line below, potential for false-positives
     - match: '({{val_id}})\s*(::|∷)'
       comment: Function declarations with alphanumeric identifier
       captures:
         1: entity.name.function.haskell
         2: keyword.operator.haskell
+    - match: '^\(({{op_id}})\)\s*$'
+      captures:
+        1: entity.name.function.haskell
+      comment: Dirty hack to capture function declarations where the type sig starts on the line below, potential for false-positives
     - match: '\(({{op_id}})\)\s*(::|∷)'
       comment: Function declarations with operator identifier
       captures:
         1: entity.name.function.haskell
         2: keyword.operator.haskell
     - match: '\b{{type_id}}'
-      scope: constant.other.haskell
+      scope: storage.type.haskell
     - include: comments
-    - include: infix_op
     - match: '{{op_id}}'
       scope: keyword.operator.haskell
   block_comment:
@@ -215,31 +220,22 @@ contexts:
     - match: '--(?![!#$%&*+./<=>?@\\\^|~:])'
       scope: punctuation.definition.comment.haskell
       push:
-        - meta_scope: comment.line.double-dash.haskell
+        - meta_scope: comment.line.haskell
         - match: '$'
           pop: true
     - include: block_comment
-  infix_op:
-    - match: '(\({{op_id}}\)|\(,+\))'
-      comment: Infix operator in prefix position
-      scope: entity.name.function.infix.haskell
   module_exports:
     - match: '\('
       push:
+        - include: comments
+        - match: '\b({{type_id}})(\(.[^\)]*\)|)'
+          captures:
+            1: storage.type.haskell
+        - match: '{{op_id}}'
+          scope: keyword.operator.haskell
         - meta_scope: meta.declaration.exports.haskell
         - match: '\)'
           pop: true
-        - match: '\b{{val_id}}'
-          scope: entity.name.function.haskell
-        - match: '\b({{type_id}})\(..\)'
-          captures:
-            1: storage.type.haskell
-        - match: '\b{{type_id}}'
-          scope: storage.type.haskell
-        - match: '\(({{op_id}})\)'
-          captures:
-            1: entity.name.function.haskell
-        - include: comments
   module_name:
     - match: '{{type_id}}'
       scope: support.other.module.haskell
