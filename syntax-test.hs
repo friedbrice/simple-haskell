@@ -2,6 +2,7 @@
 
 module Main (
     Foo,
+    -- a nice comment in the module exports list
     Fooable,
     main
 ) where
