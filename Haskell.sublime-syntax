@@ -39,6 +39,7 @@ contexts:
       captures:
         1: keyword.other.haskell
       push:
+        - include: comments
         - meta_scope: meta.declaration.class.haskell
         - match: '($|;)'
           pop: true
@@ -56,6 +57,7 @@ contexts:
       captures:
         1: keyword.other.haskell
       push:
+        - include: comments
         - meta_scope: meta.declaration.class.haskell
         - match: '($|;)'
           pop: true
