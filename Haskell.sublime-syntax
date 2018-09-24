@@ -26,6 +26,7 @@ contexts:
       captures:
         1: keyword.other.haskell
       push:
+        - include: comments
         - meta_scope: meta.declaration.module.haskell
         - match: '(where)'
           captures:
