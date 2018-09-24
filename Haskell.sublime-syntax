@@ -14,18 +14,18 @@ variables:
   decimal: '[{{digit}}][{{digit}}_]*'
   hexadecimal: '[{{hexit}}][{{hexit}}_]*'
   octal: '[{{octit}}][{{octit}}_]*'
-  id_tail: '[a-zA-Z0-9_'']*'
   type_head: '[A-Z]'
-  type_id: '{{type_head}}{{id_tail}}'
   val_head: '[a-z_]'
+  id_tail: '[a-zA-Z0-9_'']*'
+  type_id: '{{type_head}}{{id_tail}}'
   val_id: '{{val_head}}{{id_tail}}'
+  op_id: '[!#$%&*+./<=>?@\\\^|\-~:]+'
 
 contexts:
   main:
     - match: '\bundefined\b'
       scope: invalid.haskell
-    - match: '`[a-zA-Z_'']*?`'
-      # comment: In case this regex seems unusual for an infix operator, note that Haskell allows any ordinary function application (elem 4 [1..10]) to be rewritten as an infix expression (4 `elem` [1..10]).
+    - match: '`{{val_id}}`'
       scope: keyword.operator.function.infix.haskell
     - match: '\b(module)\b'
       captures:
@@ -59,24 +59,6 @@ contexts:
           scope: variable.other.generic-type.haskell
         - match: '(=>|⇒)'
           scope: keyword.operator.haskell
-    # - match: '\b(instance)\b'
-    #   captures:
-    #     1: keyword.other.haskell
-    #   push:
-    #     - include: comments
-    #     - meta_scope: meta.declaration.class.haskell
-    #     - match: '($|;)'
-    #       pop: true
-    #     - match: '\b(where)\b'
-    #       captures:
-    #         1: keyword.other.haskell
-    #       pop: true
-    #     - match: '[A-Z][A-Za-z_'']*'
-    #       scope: entity.other.inherited-class.haskell
-    #     - match: '\b[a-z][a-zA-Z0-9_'']*\b'
-    #       scope: variable.other.generic-type.haskell
-    #     - match: '(=>|⇒)'
-    #       scope: keyword.operator.haskell
     - match: '\b(import)\b'
       captures:
         1: keyword.other.haskell
@@ -97,16 +79,16 @@ contexts:
         - meta_scope: meta.deriving.haskell
         - match: '\)'
           pop: true
-        - match: '\b[A-Z][a-zA-Z_'']*'
+        - match: '\b{{type_id}}'
           scope: entity.other.inherited-class.haskell
     - match: '(deriving)\s*'
       captures:
         1: keyword.other.haskell
       push:
         - meta_scope: meta.deriving.haskell
-        - match: '[^a-zA-Z_'']'
+        - match: '($|;)'
           pop: true
-        - match: '[A-Z][a-zA-Z_'']*'
+        - match: '{{type_id}}'
           scope: entity.other.inherited-class.haskell
     - match: '\b(deriving|where|data|type|case|of|let|in|newtype|default)\b'
       scope: keyword.other.haskell
@@ -115,12 +97,12 @@ contexts:
     - match: '\b(do|if|then|else)\b'
       scope: keyword.control.haskell
     - match: '\b([0-9]+\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\b'
-      # comment: Floats are always decimal
+      comment: Floats are always decimal
       scope: constant.numeric.float.haskell
     - match: '\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b'
       scope: constant.numeric.haskell
     - match: '^\s*(#)\s*\w+'
-      # comment: In addition to Haskell's "native" syntax, GHC permits the C preprocessor to be run on a source file.
+      comment: In addition to Haskell's "native" syntax, GHC permits the C preprocessor to be run on a source file.
       scope: meta.preprocessor.c
       captures:
         1: punctuation.definition.preprocessor.c
@@ -149,7 +131,7 @@ contexts:
         - match: '\^[A-Z@\[\]\\\^_]'
           scope: constant.character.escape.control.haskell
     - match: '\[(?:|e|d|t|p)\|'
-      # comment: Points out splices in ast quotes
+      comment: Points out splices in ast quotes
       scope: keyword.other.quasibracket.haskell
       push:
         - meta_scope: meta.other.quasiquote.haskell
@@ -165,7 +147,7 @@ contexts:
         - match: '[^$]*'
           scope: string.quasiquoted.haskell
     - match: '\$\('
-      # comment: Highlight the beginning of a splice.
+      comment: Highlight the beginning of a splice.
       scope: keyword.other.splice.haskell
     - match: '\[[a-zA-Z0-9_'']*\|'
       scope: keyword.other.quasibracket.haskell
@@ -199,25 +181,22 @@ contexts:
         4: constant.character.escape.hexadecimal.haskell
         5: constant.character.escape.control.haskell
         6: punctuation.definition.string.end.haskell
-    - match: '([a-z_][a-zA-Z0-9_'']*)\s*(::|∷)'
-      # comment: Function declarations with alphanumeric identifier
+    - match: '({{val_id}})\s*(::|∷)'
+      comment: Function declarations with alphanumeric identifier
       captures:
         1: entity.name.function.haskell
         2: keyword.operator.haskell
-    - match: '\(([!#$%&*+./<=>?@\\\^|\-~:]+)\)\s*(::|∷)'
-      # comment: Function declarations with operator identifier
+    - match: '\(({{op_id}})\)\s*(::|∷)'
+      comment: Function declarations with operator identifier
       captures:
         1: entity.name.function.haskell
         2: keyword.operator.haskell
-    - match: '\b[A-Z]\w*\b'
+    - match: '\b{{type_id}}'
       scope: constant.other.haskell
     - include: comments
     - include: infix_op
-    - match: '[!#$%&*+./<=>?@\\\^|\-~:]+'
-      # comment: In case this regex seems overly general, note that Haskell permits the definition of new operators which can be nearly any string of punctuation characters, such as $%^&*.
+    - match: '{{op_id}}'
       scope: keyword.operator.haskell
-    - match: ','
-      scope: punctuation.separator.comma.haskell
   block_comment:
     - match: '\{-(?!#)'
       scope: punctuation.definition.comment.begin.haskell
@@ -241,8 +220,8 @@ contexts:
           pop: true
     - include: block_comment
   infix_op:
-    - match: '(\([!#$%&*+./<=>?@\\\^|\-~:]+\)|\(,+\))'
-      # comment: Infix operator in prefix position
+    - match: '(\({{op_id}}\)|\(,+\))'
+      comment: Infix operator in prefix position
       scope: entity.name.function.infix.haskell
   module_exports:
     - match: '\('
@@ -250,19 +229,19 @@ contexts:
         - meta_scope: meta.declaration.exports.haskell
         - match: '\)'
           pop: true
-        - match: '\b[a-z][a-zA-Z_''0-9]*'
+        - match: '\b{{val_id}}'
           scope: entity.name.function.haskell
-        - match: '\b[A-Z][A-Za-z_''0-9]*'
+        - match: '\b({{type_id}})\(..\)'
+          captures:
+            1: storage.type.haskell
+        - match: '\b{{type_id}}'
           scope: storage.type.haskell
-        - match: ','
-          scope: punctuation.separator.comma.haskell
-        - include: infix_op
-        - match: '\(.*?\)'
-          # comment: So named because I don't know what to call this.
-          scope: meta.other.unknown.haskell
+        - match: '\(({{op_id}})\)'
+          captures:
+            1: entity.name.function.haskell
         - include: comments
   module_name:
-    - match: '[A-Z][A-Za-z._'']*'
+    - match: '{{type_id}}'
       scope: support.other.module.haskell
   pragma:
     - match: '\{-#'
