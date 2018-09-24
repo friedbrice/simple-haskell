@@ -3,8 +3,11 @@
 module Main (
     Foo,
     -- a nice comment in the module exports list
-    Fooable,
-    main
+    Fooable(..),
+    main,
+    add,
+    (-->),
+    (+:)
 ) where
 
 import Data.String
@@ -157,5 +160,18 @@ instance (Class0 a, Class' a) => Class0' (Maybe a)
 someFunc' :: Char -> Int -> String
 someFunc' char int = replicate int char
 
--- type with primes in their names
+-- types with primes in their names
 newtype Foo' = Foo' { unFoo' :: Foo }
+
+-- operators and guards
+(+:) :: Enum a => Int -> a -> a
+n +: x
+    | n <= 0    = x
+    | otherwise = (n - 1) +: succ x
+
+-- infix functions, operator sections, list literals, char literals
+someList :: [Char]
+someList = (5 +:) `fmap1'` ['a', 'b', 'c']
+  where
+    fmap1' :: (Char -> Char) -> [Char] -> [Char]
+    fmap1' = fmap
