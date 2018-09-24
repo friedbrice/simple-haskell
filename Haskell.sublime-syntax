@@ -14,6 +14,11 @@ variables:
   decimal: '[{{digit}}][{{digit}}_]*'
   hexadecimal: '[{{hexit}}][{{hexit}}_]*'
   octal: '[{{octit}}][{{octit}}_]*'
+  id_tail: '[a-zA-Z0-9_'']*'
+  type_head: '[A-Z]'
+  type_id: '{{type_head}}{{id_tail}}'
+  val_head: '[a-z_]'
+  val_id: '{{val_head}}{{id_tail}}'
 
 contexts:
   main:
@@ -36,7 +41,7 @@ contexts:
         - include: module_exports
         - match: '[a-z]+'
           scope: invalid
-    - match: '\b(class)\b'
+    - match: '\b(class|instance)\b'
       captures:
         1: keyword.other.haskell
       push:
@@ -48,30 +53,30 @@ contexts:
           captures:
             1: keyword.other.haskell
           pop: true
-        - match: '[A-Z][A-Za-z_'']*'
+        - match: '{{type_id}}'
           scope: entity.other.inherited-class.haskell
-        - match: '\b[a-z][a-zA-Z0-9_'']*\b'
+        - match: '\b{{val_id}}\b'
           scope: variable.other.generic-type.haskell
         - match: '(=>|⇒)'
           scope: keyword.operator.haskell
-    - match: '\b(instance)\b'
-      captures:
-        1: keyword.other.haskell
-      push:
-        - include: comments
-        - meta_scope: meta.declaration.class.haskell
-        - match: '($|;)'
-          pop: true
-        - match: '\b(where)\b'
-          captures:
-            1: keyword.other.haskell
-          pop: true
-        - match: '[A-Z][A-Za-z_'']*'
-          scope: entity.other.inherited-class.haskell
-        - match: '\b[a-z][a-zA-Z0-9_'']*\b'
-          scope: variable.other.generic-type.haskell
-        - match: '(=>|⇒)'
-          scope: keyword.operator.haskell
+    # - match: '\b(instance)\b'
+    #   captures:
+    #     1: keyword.other.haskell
+    #   push:
+    #     - include: comments
+    #     - meta_scope: meta.declaration.class.haskell
+    #     - match: '($|;)'
+    #       pop: true
+    #     - match: '\b(where)\b'
+    #       captures:
+    #         1: keyword.other.haskell
+    #       pop: true
+    #     - match: '[A-Z][A-Za-z_'']*'
+    #       scope: entity.other.inherited-class.haskell
+    #     - match: '\b[a-z][a-zA-Z0-9_'']*\b'
+    #       scope: variable.other.generic-type.haskell
+    #     - match: '(=>|⇒)'
+    #       scope: keyword.operator.haskell
     - match: '\b(import)\b'
       captures:
         1: keyword.other.haskell
