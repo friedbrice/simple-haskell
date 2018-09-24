@@ -87,6 +87,7 @@ contexts:
       captures:
         1: keyword.other.haskell
       push:
+        - include: comments
         - meta_scope: meta.deriving.haskell
         - match: \)
           pop: true
