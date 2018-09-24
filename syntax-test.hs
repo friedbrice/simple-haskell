@@ -1,5 +1,11 @@
 {-# LANGUAGE FlexibleInstances, OverloadedStrings #-}
 
+module Main (
+    Foo,
+    Fooable,
+    main
+) where
+
 import Data.String
 
 -- SublimeHaskell:
@@ -128,3 +134,27 @@ f --> g = g . f
 -- operators that end with '--'
 (<--) :: (b -> c) -> (a -> b) -> a -> c
 f <-- g = f . g
+
+-- comments in class and instance declarations
+class SomeClass a -- some comment
+instance SomeClass a -- some comment
+
+-- classes can have numbers and primes in their names
+class Class0 a
+instance Class0 Int
+
+class Class' a
+instance Class' Int
+
+-- class constraints and contexts
+class (Class0 a, Class' a) => Class0' a
+instance Class0 a => Class0 (Maybe a)
+instance Class' a => Class' (Maybe a)
+instance (Class0 a, Class' a) => Class0' (Maybe a)
+
+-- functions with primes in their names
+someFunc' :: Char -> Int -> String
+someFunc' char int = replicate int char
+
+-- type with primes in their names
+newtype Foo' = Foo' { unFoo' :: Foo }
