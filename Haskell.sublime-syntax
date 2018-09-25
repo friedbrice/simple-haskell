@@ -24,7 +24,7 @@ contexts:
     - match: '\bundefined\b'
       scope: invalid.haskell
     - match: '`{{val_id}}`'
-      scope: keyword.operator.function.infix.haskell
+      scope: keyword.operator.haskell
     - match: '\b(module)\b'
       captures:
         1: keyword.other.haskell
