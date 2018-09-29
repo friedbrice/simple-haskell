@@ -8,9 +8,9 @@ module Main (
     Fooable(..),
     DeriveMoreThanOne,
     main,
-    addEmUp,
     (-->),
     (+:),
+    addEmUp,
 ) where
 
 import Prelude hiding (Traversable(traverse, sequenceA))

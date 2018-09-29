@@ -99,7 +99,7 @@ contexts:
       scope: constant.numeric.haskell
     - match: '\b([0-9]+|0([xX][0-9a-fA-F]+|[oO][0-7]+))\b'
       scope: constant.numeric.haskell
-    - match: '^\s*(#)\s*\w+'
+    - match: '^(#)\s*\w+'
       comment: In addition to Haskell's "native" syntax, GHC permits the C preprocessor to be run on a source file.
       scope: meta.preprocessor.c
       captures:
@@ -227,13 +227,14 @@ contexts:
   module_exports:
     - match: '\('
       push:
+        - meta_scope: meta.declaration.exports.haskell
         - include: comments
         - match: '\b({{type_id}})(\(.[^\)]*\)|)'
           captures:
             1: storage.type.haskell
-        - match: '{{op_id}}'
-          scope: keyword.operator.haskell
-        - meta_scope: meta.declaration.exports.haskell
+        - match: '\(({{op_id}})\)'
+          captures:
+            1: keyword.operator.haskell
         - match: '\)'
           pop: true
   module_name:
