@@ -17,7 +17,7 @@ variables:
   id_tail: '[a-zA-Z0-9_'']*'
   type_id: '[A-Z]{{id_tail}}'
   val_id: '[a-z_]{{id_tail}}'
-  op_id: '[!#$%&*+./<=>?@\\\^|\-~:]+'
+  op_id: '[!#$%&*+./<=>?@\\\^|\-~:∷→⇒]+'
 
 contexts:
   main:
@@ -55,7 +55,7 @@ contexts:
           scope: entity.other.inherited-class.haskell
         - match: '\b{{val_id}}\b'
           scope: variable.other.generic-type.haskell
-        - match: '(=>|⇒)'
+        - match: '{{op_id}}'
           scope: keyword.operator.haskell
     - match: '\b(import)\b'
       captures:
@@ -67,7 +67,7 @@ contexts:
         - match: '(qualified|as|hiding)'
           scope: keyword.other.haskell
         - include: module_name
-        - include: module_exports
+        - include: module_imports
         - include: comments
     - match: '(deriving)\s*\('
       captures:
@@ -224,19 +224,26 @@ contexts:
         - match: '$'
           pop: true
     - include: block_comment
+  imports_exports:
+    - include: comments
+    - match: '\b({{type_id}})(\(.[^\)]*\)|)'
+      captures:
+        1: storage.type.haskell
+    - match: '\(({{op_id}})\)'
+      captures:
+        1: keyword.operator.haskell
+    - match: '\)'
+      pop: true
   module_exports:
     - match: '\('
       push:
         - meta_scope: meta.declaration.exports.haskell
-        - include: comments
-        - match: '\b({{type_id}})(\(.[^\)]*\)|)'
-          captures:
-            1: storage.type.haskell
-        - match: '\(({{op_id}})\)'
-          captures:
-            1: keyword.operator.haskell
-        - match: '\)'
-          pop: true
+        - include: imports_exports
+  module_imports:
+    - match: '\('
+      push:
+        - meta_scope: meta.declaration.imports.haskell
+        - include: imports_exports
   module_name:
     - match: '{{type_id}}'
       scope: support.other.module.haskell
