@@ -38,7 +38,7 @@ Syntax highlighting is based on the default _Haskell.sublime-syntax_ file includ
 
 Multi-line string support by [SQbQxeKd3JHD8](https://github.com/SublimeHaskell/SublimeHaskell/pull/422).
 
-Copyright (c) 2018 Daniel Brice, except as otherwise noted.
+Copyright (c) 2018 Anthony Brice and Daniel Brice, except as otherwise noted.
 
 Permission granted to anyone who posesses the software to use, distribute, and modify.
 
