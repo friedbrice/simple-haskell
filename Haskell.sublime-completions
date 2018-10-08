@@ -56,7 +56,7 @@
     "FunctionalDependencies",
     "GADTs",
     "GADTSyntax",
-    "GeneralisedNewtypeDeriving",
+    "GeneralizedNewtypeDeriving",
     "ImplicitParams",
     "ImplicitPrelude",
     "ImpredicativeTypes",
