@@ -21,6 +21,12 @@ variables:
 
 contexts:
   main:
+    - match: '^<<<<<<<.*$'
+      scope: invalid.haskell
+    - match: '^>>>>>>>.*$'
+      scope: invalid.haskell
+    - match: '^=======.*$'
+      scope: invalid.haskell
     - match: '\bundefined\b'
       scope: invalid.haskell
     - match: '`{{val_id}}`'
